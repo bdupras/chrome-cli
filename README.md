@@ -7,6 +7,7 @@ It is a native binary that uses the Scripting Bridge to communicate with Chrome.
 chrome-cli has been tested with the following browsers:
 
 - Chrome
+- Chrome Beta
 - Chrome Canary
 - Chromium
 - Brave
@@ -44,6 +45,7 @@ brew install chrome-cli
 This will install:
 
 - chrome-cli
+- chrome-beta-cli
 - chrome-canary-cli
 - chromium-cli
 - brave-cli
