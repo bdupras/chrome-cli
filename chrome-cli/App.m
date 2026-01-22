@@ -312,14 +312,22 @@ static NSString * const kJsPrintSource = @"(function() { return document.getElem
     NSString *windowArg = [args asString:@"id|name"];
     NSString *url = [args asString:@"url"];
 
-    chromeTab *tab = [[[self.chrome classForScriptingClass:@"tab"] alloc] init];
     chromeWindow *window = [self findWindowByIdOrName:windowArg];
+    chromeTab *tab;
 
     if (!window) {
-        return;
+        // Create new window and set its name
+        window = [[[self.chrome classForScriptingClass:@"window"] alloc] init];
+        [self.chrome.windows addObject:window];
+        window.givenName = windowArg;
+        // Use the default tab that Chrome creates with new windows
+        tab = [window.tabs firstObject];
+    } else {
+        // Add a new tab to existing window
+        tab = [[[self.chrome classForScriptingClass:@"tab"] alloc] init];
+        [window.tabs addObject:tab];
     }
 
-    [window.tabs addObject:tab];
     tab.URL = url;
 
     [self printInfo:tab];
